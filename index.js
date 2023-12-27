@@ -31,6 +31,7 @@ async function run() {
 
         const loanCollections = client.db('loansDB').collection('loans');
         const newsCollections = client.db('loansDB').collection('newses');
+        const blogsCollections = client.db('loansDB').collection('blogs');
 
         app.get('/loans', async (req, res) => {
             const result = await loanCollections.find().toArray();
@@ -49,10 +50,22 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/newses/:id', async (req, res) => {
+        app.get('/news/:id', async (req, res) => {
             const id = req.params.id;
             const query = {_id: new ObjectId(id)}
             const result = await newsCollections.findOne(query);
+            res.send(result)
+        })
+
+        app.get('blogs', async (req, res) => {
+            const result = await blogsCollections.find().toArray();
+            res.send(result)
+        })
+
+        app.get('/blog/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = {_id: new ObjectId(id)}
+            const result = await blogsCollections.findOne(query);
             res.send(result)
         })
 
